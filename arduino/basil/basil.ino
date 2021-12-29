@@ -35,11 +35,6 @@ void loop() {
             }
             else Serial.print("Pump is busy");
             break;
-        case 'a':
-            Serial.println(key);
-            Serial.print("Value = ");
-            Serial.print(val);
-            Serial.print("\n");
         case 't':
             Serial.println(dht.readTemperature());
             break;
