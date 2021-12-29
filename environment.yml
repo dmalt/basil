@@ -1,0 +1,9 @@
+name: arduino
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3
+  - pyserial
+  - ipython
+  - schedule
