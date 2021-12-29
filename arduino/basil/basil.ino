@@ -31,7 +31,6 @@ void loop() {
                 break;
             }
             if (pump.getState() == 'i') {
-                Serial.println(val);
                 pump.turnOn(val);
                 Serial.println("Turning on the pump");
             }
