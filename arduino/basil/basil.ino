@@ -24,26 +24,34 @@ void loop() {
     uint16_t val;
     receiveCommand(key, val);
     switch (key) {
-        case 'w':
+        case 'p':  // pump
             if (!val) {
                 pump.turnOff();
+                Serial.println("Turning off the pump");
                 break;
             }
-            if (pump.isReady()) {
+            if (pump.getState() == 'i') {
                 Serial.println(val);
                 pump.turnOn(val);
+                Serial.println("Turning on the pump");
             }
             else Serial.print("Pump is busy");
             break;
-        case 't':
+        case 't':  // temperature
             Serial.println(dht.readTemperature());
             break;
-        case 'h':
+        case 'h':  // humidity
             Serial.println(dht.readHumidity());
             break;
-        case 'r':
-            if (val) digitalWrite(RELAY_PIN, HIGH);
-            else digitalWrite(RELAY_PIN, LOW);
+        case 'l':  // lamp
+            if (val) {
+                digitalWrite(RELAY_PIN, HIGH);
+                Serial.println("Turning on the lamp");
+            }
+            else {
+                digitalWrite(RELAY_PIN, LOW);
+                Serial.println("Turning off the lamp");
+            }
             break;
         case '\0':
             break;

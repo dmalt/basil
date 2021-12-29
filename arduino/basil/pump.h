@@ -1,8 +1,8 @@
 #pragma once 
 #include <Arduino.h>
 
-#define BUSY false
-#define READY true
+#define WORKING false
+#define IDLE true
 #define MAX_WATER_SEC 300  // 5 min
 
 
@@ -15,23 +15,26 @@ class Pump {
                 return;
             }
             digitalWrite(_pin, HIGH);
-            _state = BUSY;
+            _state = WORKING;
             _period = seconds * 1000;
             _start = millis();
         }
         void turnOff() {
             digitalWrite(_pin, LOW);
-            _state = READY;
+            _state = IDLE;
         }
         void update() {
-            if (_state == READY) return;
+            if (_state == IDLE) return;
             if (millis() - _start >= _period) turnOff();
         }
-        bool isReady() { return _state; }
+        char getState() {
+            if (_state == WORKING) return 'w';  // working
+            else return 'i';  // idle
+        }
 
     private:
         byte _pin;
-        bool _state = READY;
+        bool _state = IDLE;
         uint32_t _period;
         uint32_t _start;
 };
