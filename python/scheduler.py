@@ -1,12 +1,13 @@
+import logging
 import schedule
 from time import sleep
 from api import (
-    get_humidity,
-    get_temperature,
     turn_off_lamp,
     turn_on_lamp,
     turn_on_pump,
 )
+
+logging.basicConfig(level=logging.INFO)
 
 
 def blink():
@@ -15,7 +16,15 @@ def blink():
     turn_off_lamp()
 
 
-schedule.every().day.at("15:20").do(turn_on_lamp)
+def water():
+    turn_on_pump(15)
+
+
+logging.info("Starting...")
+schedule.every().day.at("08:00").do(turn_on_lamp)
+schedule.every().day.at("20:00").do(turn_off_lamp)
+schedule.every(6).hours.do(water)
+logging.info("Scheduled lamp and watering")
 
 
 while True:
