@@ -1,5 +1,6 @@
 from setup_serial import port, BAUDRATE, TIMEOUT
 from serial import Serial  # type: ignore
+import logging
 
 
 def turn_on_lamp():
@@ -7,6 +8,7 @@ def turn_on_lamp():
         arduino.write(bytes("l1", "utf-8"))
         response = arduino.readline().decode("utf-8")
         assert response == "Turning on the lamp\r\n"
+        logging.info(response)
 
 
 def turn_off_lamp():
@@ -14,6 +16,7 @@ def turn_off_lamp():
         arduino.write(bytes("l0", "utf-8"))
         response = arduino.readline().decode("utf-8")
         assert response == "Turning off the lamp\r\n"
+        logging.info(response)
 
 
 def turn_on_pump(n_seconds: int):
@@ -22,6 +25,7 @@ def turn_on_pump(n_seconds: int):
         arduino.write(bytes(f"p{n_seconds}", "utf-8"))
         response = arduino.readline().decode("utf-8")
         assert response == "Turning on the pump\r\n"
+        logging.info(response)
 
 
 def turn_off_pump():
@@ -29,6 +33,7 @@ def turn_off_pump():
         arduino.write(bytes("p0", "utf-8"))
         response = arduino.readline().decode("utf-8")
         assert response == "Turning off the pump\r\n"
+        logging.info(response)
 
 
 def get_humidity() -> float:
